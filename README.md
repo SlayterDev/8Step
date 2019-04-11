@@ -1,5 +1,7 @@
 # Arduino Step Sequencer
 
+Hardware MIDI sequencer adapted from the Adafruit [Mini UNTZtrument](https://learn.adafruit.com/mini-untztrument-3d-printed-midi-controller/overview) project. The case is 3D printed and based around an Seeeduino Lite. There are only 16 buttons so the controls are a bit creative using the shift button. 
+
 ## Features
 
 **(Required)**
@@ -13,6 +15,7 @@
 
 - [ ] Sequence multiple devices simultaneously
 - [ ] Sync with USB for start/stop and tempo
+- [ ] Send Play over MIDI for external devices
 - [ ] Store at least the last sequence
 - [ ] Tap Tempo
 - [ ] Variable Sequence Length
@@ -21,6 +24,9 @@
 - [ ] Performance Mode
 - [ ] Remove Last Step
 - [ ] Edit Step
+- [ ] Gate length on Knob 3
+- [ ] Swing on Knob 4
+- [ ] Add switch for internal/USB/external sync
 
 ## Button Layout
 
@@ -53,15 +59,15 @@
 
 `s` - (Shift)
 
-`d` - Octave down
+`d` - Octave down (Toggle sync mode)
 
-`u` - Octave up
+`u` - Octave up (Toggle Knob mode)
 
 `b` - Prev Page (Reduce Sequence)
 
 `n` - Next Page (Extend Sequence)
 
-`1-8` - Steps/Keys
+`1-8` - Steps/Keys (MIDI Channel?)
 
 
 

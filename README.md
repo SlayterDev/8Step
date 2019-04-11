@@ -1,6 +1,6 @@
 # Arduino Step Sequencer
 
-### Features
+## Features
 
 **(Required)**
 
@@ -20,7 +20,7 @@
 - [ ] Accidentals using Shift Button
 - [ ] Performance Mode
 
-### Button Layout
+## Button Layout
 
 ```
 +------------+
@@ -63,7 +63,7 @@
 
 
 
-### Workflow
+## Workflow
 
 **Record Sequence:**
 

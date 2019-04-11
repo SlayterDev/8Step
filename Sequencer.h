@@ -2,6 +2,7 @@
 #define __SEQUENCER__
 
 #include <stdint.h>
+#include "Constants.h"
 
 class Sequencer {
 public:
@@ -20,10 +21,10 @@ public:
     bool addStep(uint8_t step);
 
     Sequencer() :
-    sequenceLength(8),
+    sequenceLength(MIN_SEQUENCE_LENGTH),
     state(SEQUENCER_STATE_STOPPED),
     currentStep(0) {
-        for (int i = 0; i < 32; i++) {
+        for (int i = 0; i < MAX_SEQUENCE_LENGTH; i++) {
             sequence[i] = 0;
         }
     }
@@ -35,7 +36,7 @@ public:
     inline SequencerState getState() { return state; }
 
 private:
-    uint8_t sequence[32];
+    uint8_t sequence[MAX_SEQUENCE_LENGTH];
     int sequenceLength;
 
     SequencerState state;

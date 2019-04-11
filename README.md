@@ -1,4 +1,5 @@
 # Arduino Step Sequencer
+========================
 
 Hardware MIDI sequencer adapted from the Adafruit [Mini UNTZtrument](https://learn.adafruit.com/mini-untztrument-3d-printed-midi-controller/overview) project. The case is 3D printed and based around a Seeeduino Lite. There are only 16 buttons so the controls are a bit creative using the shift button. 
 

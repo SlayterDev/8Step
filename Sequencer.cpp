@@ -29,7 +29,7 @@ uint8_t Sequencer::processStep() {
 }
 
 void Sequencer::increaseSequence() {
-    if (sequenceLength == 32) return;
+    if (sequenceLength == MAX_SEQUENCE_LENGTH) return;
 
     sequenceLength += 8;
 
@@ -40,7 +40,7 @@ void Sequencer::increaseSequence() {
 }
 
 void Sequencer::decreaseSequence() {
-    if (sequenceLength == 8) return;
+    if (sequenceLength == MIN_SEQUENCE_LENGTH) return;
 
     sequenceLength -= 8;
 }

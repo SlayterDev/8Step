@@ -13,8 +13,6 @@ public:
 
     void togglePlayPause();
     void startRecording();
-    int getCurrentStep();
-    SequencerState getState();
     uint8_t processStep();
     void increaseSequence();
     void decreaseSequence();
@@ -32,6 +30,9 @@ public:
 
     //// INLINE FUNCTIONS ////
     inline bool isPlaying() const { return state == SEQUENCER_STATE_PLAYING; }
+    inline int getSequenceLength() const { return sequenceLength; }
+    inline int getCurrentStep() { return currentStep; }
+    inline SequencerState getState() { return state; }
 
 private:
     uint8_t sequence[32];

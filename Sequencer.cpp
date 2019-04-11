@@ -17,14 +17,6 @@ void Sequencer::startRecording() {
     currentStep = 0;
 }
 
-int Sequencer::getCurrentStep() {
-    return currentStep;
-}
-
-Sequencer::SequencerState Sequencer::getState() {
-    return state;
-}
-
 uint8_t Sequencer::processStep() {
     uint8_t step = sequence[currentStep];
 

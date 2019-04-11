@@ -20,6 +20,7 @@
 - [ ] Accidentals using Shift Button
 - [ ] Performance Mode
 - [ ] Remove Last Step
+- [ ] Edit Step
 
 ## Button Layout
 

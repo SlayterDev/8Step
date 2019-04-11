@@ -4,31 +4,21 @@
 
 **(Required)**
 
-- Sequence MIDI devices
-
-- Change tempo with Rate Knob
-
-- Change time division with Knob 2
-
-- Transmit MIDI CC on Knob 3 & 4
+- [ ] Sequence MIDI devices
+- [ ] Change tempo with Rate Knob
+- [ ] Change time division with Knob 2
+- [ ] Transmit MIDI CC on Knob 3 & 4
 
 **(Desired)**
 
-- Sequence multiple devices simultaneously
-
-- Sync with USB for start/stop and tempo
-
-- Store at least the last sequence
-
-- Tap Tempo
-
-- Variable Sequence Length
-
-- Change octaves
-
-- Accidentals using Shift Button
-
-- Performance Mode
+- [ ] Sequence multiple devices simultaneously
+- [ ] Sync with USB for start/stop and tempo
+- [ ] Store at least the last sequence
+- [ ] Tap Tempo
+- [ ] Variable Sequence Length
+- [ ] Change octaves
+- [ ] Accidentals using Shift Button
+- [ ] Performance Mode
 
 ### Button Layout
 

@@ -19,6 +19,7 @@
 - [ ] Change octaves
 - [ ] Accidentals using Shift Button
 - [ ] Performance Mode
+- [ ] Remove Last Step
 
 ## Button Layout
 

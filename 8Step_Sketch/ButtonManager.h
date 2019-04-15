@@ -12,13 +12,18 @@ public:
     bool playPressed();
     bool recordPressed();
     bool tapPressed();
+    bool extendPressed();
+    bool reducePressed();
+
     void commitLEDState();
     uint8_t notePressed();
-    uint8_t noteReleased();
-    void setBeatLED(int beat);
+    uint8_t noteReleased(bool isPlaying);
+    void setBeatLED(int beat, int sequenceLength);
+    void setStepRecordLEDs(int steps, int sequenceLength);
 
     ButtonManager() :
-    previousReadTime(0) {
+    previousReadTime(0),
+    stepsPressed(0) {
         uint8_t temp[] = {60, 62, 64, 65, 67, 69, 71, 72};
         for (int i = 0; i < 8; i++) {
             notes[i] = temp[i];
@@ -41,6 +46,7 @@ private:
     Adafruit_Trellis trellis;
     uint8_t notes[8];
     unsigned long previousReadTime;
+    uint8_t stepsPressed;
 
     void clearAllBeats();
 };

@@ -20,7 +20,7 @@ void Sequencer::startRecording() {
 uint8_t Sequencer::processStep(ButtonManager *manager) {
     uint8_t step = sequence[currentStep];
 
-    manager->setBeatLED(currentStep);
+    manager->setBeatLED(currentStep, sequenceLength);
 
     currentStep++;
     if (currentStep == sequenceLength) {
@@ -45,6 +45,10 @@ void Sequencer::decreaseSequence() {
     if (sequenceLength == MIN_SEQUENCE_LENGTH) return;
 
     sequenceLength -= 8;
+
+    if (currentStep >= sequenceLength) {
+        currentStep = 0;
+    }
 }
 
 bool Sequencer::addStep(uint8_t step) {

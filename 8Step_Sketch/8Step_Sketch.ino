@@ -58,18 +58,29 @@ void handleButtons(unsigned long currentMillis) {
     }
 
     uint8_t notePressed = buttonManager.notePressed();
-    uint8_t noteReleased = buttonManager.noteReleased();
+    uint8_t noteReleased = buttonManager.noteReleased(sequencer.isPlaying());
 
     if (notePressed > 0) {
       midiManager.noteOn(notePressed);
     }
     if (noteReleased > 0) {
       midiManager.noteOff(noteReleased);
-      sequencer.addStep(noteReleased);
+      if (sequencer.addStep(noteReleased)) {
+        buttonManager.setStepRecordLEDs(sequencer.getCurrentStep(), sequencer.getSequenceLength());
+      }
     }
 
     if (buttonManager.tapPressed()) {
-      sequencer.addStep(0);
+      if (sequencer.addStep(0)) {
+        buttonManager.setStepRecordLEDs(sequencer.getCurrentStep(), sequencer.getSequenceLength());
+      }
+    }
+
+    if (buttonManager.extendPressed()) {
+      sequencer.increaseSequence();
+    }
+    if (buttonManager.reducePressed()) {
+      sequencer.decreaseSequence();
     }
 
     buttonManager.commitLEDState();
@@ -89,7 +100,7 @@ void handleBeat(unsigned long currentMillis) {
     if (note != 0) {
       midiManager.noteOn(note);
     }
-    Serial.println(note);
+
     lastNote = note;
 
     prevMillis = currentMillis;

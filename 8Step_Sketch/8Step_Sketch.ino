@@ -10,6 +10,9 @@ int led = 13;
 int tempo = 120;
 int quater = (1000 / (120 * 8)) * 60; // 1/8
 
+int divs[] = {1, 2, 4, 8};
+int timeDiv = 1;
+
 unsigned long prevMillis = 0;
 
 // TODO: Remove
@@ -21,12 +24,18 @@ void setup() {
   buttonManager.setupManager();
 
   tempo = map(analogRead(0), 0, 1023, 30, 210);
+  timeDiv = map(analogRead(1), 0, 1023, 0, 3);
 }
 
-void readTempo() {
+void readKnobs() {
   int newTempo = map(analogRead(0), 0, 1023, 30, 210);
   if (newTempo != tempo) {
     tempo = newTempo;
+  }
+
+  int newDiv = divs[map(analogRead(1), 0, 1023, 0, 3)];
+  if (newDiv != timeDiv) {
+    timeDiv = newDiv;
   }
 }
 
@@ -60,7 +69,7 @@ void handleButtons(unsigned long currentMillis) {
 }
 
 void handleBeat(unsigned long currentMillis) {
-  int inter = (1000 / tempo) * 60;
+  int inter = (1000 / (tempo * timeDiv)) * 60;
 
   if (currentMillis - prevMillis >= inter && sequencer.isPlaying()) {
     // EVERY BEAT
@@ -84,7 +93,7 @@ void handleBeat(unsigned long currentMillis) {
 }
 
 void loop() {
-  readTempo();
+  readKnobs();
 
   unsigned long currentMillis = millis();
 

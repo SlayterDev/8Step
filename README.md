@@ -34,7 +34,7 @@ Hardware MIDI sequencer adapted from the Adafruit [Mini UNTZtrument](https://lea
 +------------+
 |(t)(l)(c)(c)| <-- Knobs
 +------------+
-|[r][p][T][s]| <-- Buttons
+|[p][r][T][s]| <-- Buttons
 |[d][u][b][n]|
 |[1][2][3][4]|
 |[5][6][7][8]|
@@ -51,9 +51,9 @@ Hardware MIDI sequencer adapted from the Adafruit [Mini UNTZtrument](https://lea
 
 `k` - Undefined knob
 
-`r` - Record (Clear Sequence)
-
 `p` - Play/Pause Sequence
+
+`r` - Record (Clear Sequence)
 
 `T` - Tap tempo (Rest)
 

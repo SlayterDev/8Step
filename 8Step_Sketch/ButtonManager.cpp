@@ -61,6 +61,19 @@ bool ButtonManager::recordPressed() {
     return justPressed;
 }
 
+bool ButtonManager::tapPressed() {
+    bool state = trellis.isLED(TAP_BTN);
+    bool justPressed = trellis.justPressed(TAP_BTN);
+
+    if (justPressed) {
+        trellis.setLED(TAP_BTN);
+    } else {
+        trellis.clrLED(TAP_BTN);
+    }
+
+    return justPressed;
+}
+
 uint8_t ButtonManager::notePressed() {
     uint8_t note = 0;
     

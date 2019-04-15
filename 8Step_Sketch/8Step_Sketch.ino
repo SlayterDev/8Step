@@ -23,15 +23,14 @@ void setup() {
   tempo = map(analogRead(0), 0, 1023, 30, 210);
 }
 
-void loop() {
-  // delay(100);
+void readTempo() {
+  int newTempo = map(analogRead(0), 0, 1023, 30, 210);
+  if (newTempo != tempo) {
+    tempo = newTempo;
+  }
+}
 
-  tempo = map(analogRead(0), 0, 1023, 30, 210);
-
-  int inter = (1000 / tempo) * 60;
-
-  unsigned long currentMillis = millis();
-
+void handleButtons(unsigned long currentMillis) {
   if (buttonManager.stateChanged(currentMillis)) {
     if (buttonManager.playPressed()) {
       sequencer.togglePlayPause();
@@ -52,8 +51,16 @@ void loop() {
       sequencer.addStep(noteReleased);
     }
 
+    if (buttonManager.tapPressed()) {
+      sequencer.addStep(0);
+    }
+
     buttonManager.commitLEDState();
   }
+}
+
+void handleBeat(unsigned long currentMillis) {
+  int inter = (1000 / tempo) * 60;
 
   if (currentMillis - prevMillis >= inter && sequencer.isPlaying()) {
     // EVERY BEAT
@@ -74,4 +81,14 @@ void loop() {
     midiManager.noteOff(lastNote);
     lastNote = 0;
   }
+}
+
+void loop() {
+  readTempo();
+
+  unsigned long currentMillis = millis();
+
+  handleButtons(currentMillis);  
+
+  handleBeat(currentMillis);
 }

@@ -11,6 +11,7 @@ public:
     bool stateChanged(unsigned long delta);
     bool playPressed();
     bool recordPressed();
+    bool tapPressed();
     void commitLEDState();
     uint8_t notePressed();
     uint8_t noteReleased();

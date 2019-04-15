@@ -24,7 +24,7 @@ Hardware MIDI sequencer adapted from the Adafruit [Mini UNTZtrument](https://lea
 - [x] Performance Mode
 - [ ] Remove Last Step
 - [ ] Edit Step
-- [ ] Gate length on Knob 3
+- [x] Gate length on Knob 3
 - [ ] Swing on Knob 4
 - [ ] Add switch for internal/USB/external sync
 

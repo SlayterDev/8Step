@@ -13,6 +13,8 @@ int quater = (1000 / (120 * 8)) * 60; // 1/8
 int divs[] = {1, 2, 4, 8};
 int timeDiv = 1;
 
+float gate = 0.90;
+
 unsigned long prevMillis = 0;
 
 // TODO: Remove
@@ -25,6 +27,7 @@ void setup() {
 
   tempo = map(analogRead(0), 0, 1023, 30, 210);
   timeDiv = map(analogRead(1), 0, 1023, 0, 3);
+  gate = map(analogRead(2), 0, 1023, 10, 90) / 100;
 }
 
 void readKnobs() {
@@ -36,6 +39,11 @@ void readKnobs() {
   int newDiv = divs[map(analogRead(1), 0, 1023, 0, 3)];
   if (newDiv != timeDiv) {
     timeDiv = newDiv;
+  }
+
+  float newGate = map(analogRead(2), 0, 1023, 10, 90) / 100.0f;
+  if (newGate != gate) {
+    gate = newGate;
   }
 }
 
@@ -70,6 +78,7 @@ void handleButtons(unsigned long currentMillis) {
 
 void handleBeat(unsigned long currentMillis) {
   int inter = (1000 / (tempo * timeDiv)) * 60;
+  int gateInter = inter * gate;
 
   if (currentMillis - prevMillis >= inter && sequencer.isPlaying()) {
     // EVERY BEAT
@@ -86,7 +95,7 @@ void handleBeat(unsigned long currentMillis) {
     prevMillis = currentMillis;
   }
 
-  if (lastNote != 0 && currentMillis - prevMillis >= quater) {
+  if (lastNote != 0 && currentMillis - prevMillis >= gateInter) {
     midiManager.noteOff(lastNote);
     lastNote = 0;
   }

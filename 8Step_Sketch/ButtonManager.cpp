@@ -34,10 +34,55 @@ bool ButtonManager::playPressed() {
     if (justPressed) {
         if (!state) {
             trellis.setLED(PLAY_BTN);
+            trellis.clrLED(REC_BTN);
         } else {
             trellis.clrLED(PLAY_BTN);
         }
     }
     
     return justPressed;
+}
+
+bool ButtonManager::recordPressed() {
+    bool state = trellis.isLED(REC_BTN);
+    bool justPressed = trellis.justPressed(REC_BTN);
+
+    if (justPressed) {
+        if (!state) {
+            trellis.setLED(REC_BTN);
+            trellis.clrLED(PLAY_BTN);
+        } else {
+            trellis.clrLED(REC_BTN);
+        }
+    }
+
+    return justPressed;
+}
+
+uint8_t ButtonManager::notePressed() {
+    uint8_t note = 0;
+    
+    for (int i = 8; i < 16; i++) {
+        if (trellis.justPressed(i)) {
+            note = notes[i - 8];
+
+            trellis.setLED(i);
+        }
+    }
+
+    return note;
+}
+
+uint8_t ButtonManager::noteReleased() {
+    uint8_t note = 0;
+    
+    for (int i = 8; i < 16; i++) {
+        if (trellis.justReleased(i)) {
+            note = notes[i - 8];
+
+            trellis.clrLED(i);
+        }
+    }
+
+    return note;
 }

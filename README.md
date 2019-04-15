@@ -6,8 +6,8 @@ Hardware MIDI sequencer adapted from the Adafruit [Mini UNTZtrument](https://lea
 
 **(Required)**
 
-- [ ] Sequence MIDI devices
-- [ ] Change tempo with Rate Knob
+- [x] Sequence MIDI devices
+- [x] Change tempo with Rate Knob
 - [ ] Change time division with Knob 2
 - [ ] Transmit MIDI CC on Knob 3 & 4
 
@@ -21,7 +21,7 @@ Hardware MIDI sequencer adapted from the Adafruit [Mini UNTZtrument](https://lea
 - [ ] Variable Sequence Length
 - [ ] Change octaves
 - [ ] Accidentals using Shift Button
-- [ ] Performance Mode
+- [x] Performance Mode
 - [ ] Remove Last Step
 - [ ] Edit Step
 - [ ] Gate length on Knob 3

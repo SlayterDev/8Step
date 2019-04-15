@@ -10,7 +10,10 @@ public:
     void setupManager();
     bool stateChanged(unsigned long delta);
     bool playPressed();
+    bool recordPressed();
     void commitLEDState();
+    uint8_t notePressed();
+    uint8_t noteReleased();
 
     ButtonManager() :
     previousReadTime(0) {

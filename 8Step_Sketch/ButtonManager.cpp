@@ -37,6 +37,7 @@ bool ButtonManager::playPressed() {
             trellis.clrLED(REC_BTN);
         } else {
             trellis.clrLED(PLAY_BTN);
+            clearAllBeats();
         }
     }
     
@@ -51,6 +52,7 @@ bool ButtonManager::recordPressed() {
         if (!state) {
             trellis.setLED(REC_BTN);
             trellis.clrLED(PLAY_BTN);
+            clearAllBeats();
         } else {
             trellis.clrLED(REC_BTN);
         }
@@ -85,4 +87,15 @@ uint8_t ButtonManager::noteReleased() {
     }
 
     return note;
+}
+
+void ButtonManager::clearAllBeats() {
+    for (int i = 8; i < 16; i++) {
+        trellis.clrLED(i);
+    }
+}
+
+void ButtonManager::setBeatLED(int beat) {
+    clearAllBeats();
+    trellis.setLED(beat + 8);
 }

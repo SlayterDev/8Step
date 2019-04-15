@@ -20,11 +20,6 @@ void setup() {
   
   buttonManager.setupManager();
 
-  sequencer.startRecording();
-  for (int i = 0; i < 8; i++) {
-    sequencer.addStep(60 + i);
-  }
-
   tempo = map(analogRead(0), 0, 1023, 30, 210);
 }
 
@@ -63,7 +58,8 @@ void loop() {
   if (currentMillis - prevMillis >= inter && sequencer.isPlaying()) {
     // EVERY BEAT
 
-    uint8_t note = sequencer.processStep();
+    uint8_t note = sequencer.processStep(&buttonManager);
+    buttonManager.commitLEDState();
 
     if (note != 0) {
       midiManager.noteOn(note);

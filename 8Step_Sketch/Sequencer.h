@@ -2,6 +2,7 @@
 #define __SEQUENCER__
 
 #include <stdint.h>
+#include "ButtonManager.h"
 
 #define MIN_SEQUENCE_LENGTH 8
 #define MAX_SEQUENCE_LENGTH 32
@@ -16,7 +17,7 @@ public:
 
     void togglePlayPause();
     void startRecording();
-    uint8_t processStep();
+    uint8_t processStep(ButtonManager *manager);
     void increaseSequence();
     void decreaseSequence();
 

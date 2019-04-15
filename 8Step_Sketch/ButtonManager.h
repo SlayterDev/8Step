@@ -14,11 +14,13 @@ public:
     void commitLEDState();
     uint8_t notePressed();
     uint8_t noteReleased();
+    void setBeatLED(int beat);
 
     ButtonManager() :
     previousReadTime(0) {
+        uint8_t temp[] = {60, 62, 64, 65, 67, 69, 71, 72};
         for (int i = 0; i < 8; i++) {
-            notes[i] = i + 60;
+            notes[i] = temp[i];
         }
     }
 
@@ -38,6 +40,8 @@ private:
     Adafruit_Trellis trellis;
     uint8_t notes[8];
     unsigned long previousReadTime;
+
+    void clearAllBeats();
 };
 
 #endif

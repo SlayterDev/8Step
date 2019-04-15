@@ -17,8 +17,10 @@ void Sequencer::startRecording() {
     currentStep = 0;
 }
 
-uint8_t Sequencer::processStep() {
+uint8_t Sequencer::processStep(ButtonManager *manager) {
     uint8_t step = sequence[currentStep];
+
+    manager->setBeatLED(currentStep);
 
     currentStep++;
     if (currentStep == sequenceLength) {

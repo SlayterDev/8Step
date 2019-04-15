@@ -1,15 +1,14 @@
 #include "Sequencer.h"
+#include "MidiManager.h"
 
 Sequencer sequencer;
+MidiManager midiManager;
 
 int led = 13;
 int tempo = 120;
 int quater = (1000 / (120 * 8)) * 60; // 1/8
 
-long prevMillis = 0;
-long interval = 1000;
-
-bool ledState = LOW;
+unsigned long prevMillis = 0;
 
 // TODO: Remove
 uint8_t lastNote = 0;
@@ -43,19 +42,15 @@ void loop() {
 
     uint8_t note = sequencer.processStep();
 
-    // usbMIDI.sendNoteOn(note, 127, 1);
+    midiManager.noteOn(note);
     // Serial.println(note);
     lastNote = note;
 
     prevMillis = currentMillis;
-
-    ledState = HIGH;
-    digitalWrite(led, ledState);
   }
 
-  if (ledState && currentMillis - prevMillis >= quater) {
-    ledState = LOW;
-    digitalWrite(led, ledState);
-    // usbMIDI.sendNoteOff(lastNote, 127, 1);
+  if (lastNote != 0 && currentMillis - prevMillis >= quater) {
+    midiManager.noteOff(lastNote);
+    lastNote = 0;
   }
 }

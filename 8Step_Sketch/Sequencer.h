@@ -2,7 +2,9 @@
 #define __SEQUENCER__
 
 #include <stdint.h>
-#include "Constants.h"
+
+#define MIN_SEQUENCE_LENGTH 8
+#define MAX_SEQUENCE_LENGTH 32
 
 class Sequencer {
 public:

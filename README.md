@@ -19,8 +19,8 @@ Hardware MIDI sequencer adapted from the Adafruit [Mini UNTZtrument](https://lea
 - [ ] Store at least the last sequence
 - [ ] Tap Tempo
 - [x] Variable Sequence Length
-- [ ] Change octaves
-- [ ] Accidentals using Shift Button
+- [x] Change octaves
+- [x] Accidentals using Shift Button
 - [x] Performance Mode
 - [ ] Remove Last Step
 - [ ] Edit Step

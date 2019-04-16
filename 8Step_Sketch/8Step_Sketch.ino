@@ -58,13 +58,14 @@ void handleButtons(unsigned long currentMillis) {
     }
 
     uint8_t notePressed = buttonManager.notePressed();
-    uint8_t noteReleased = buttonManager.noteReleased(sequencer.isPlaying());
+    uint8_t noteReleased = buttonManager.noteReleased(sequencer.getState() == 2);
 
     if (notePressed > 0) {
       midiManager.noteOn(notePressed);
     }
     if (noteReleased > 0) {
       midiManager.noteOff(noteReleased);
+      midiManager.noteOff(noteReleased + 1);
       if (sequencer.addStep(noteReleased)) {
         buttonManager.setStepRecordLEDs(sequencer.getCurrentStep(), sequencer.getSequenceLength());
       }

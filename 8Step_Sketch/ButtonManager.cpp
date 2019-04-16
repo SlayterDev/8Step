@@ -30,6 +30,8 @@ bool ButtonManager::stateChanged(unsigned long delta) {
         if (trellis.justReleased(SHIFT_BTN)) {
             trellis.clrLED(SHIFT_BTN);
         }
+
+        checkOctaveButtons();
     }
 
     return state;
@@ -110,12 +112,32 @@ bool ButtonManager::reducePressed() {
     return justPressed;
 }
 
+void ButtonManager::checkOctaveButtons() {
+    if (trellis.justPressed(DOWN_BTN)) {
+        octaveMod = max(octaveMod - 1, -5);
+        trellis.setLED(DOWN_BTN);
+    } else {
+        trellis.clrLED(DOWN_BTN);
+    }
+
+    if (trellis.justPressed(UP_BTN)) {
+        octaveMod = min(octaveMod + 1, 5);
+        trellis.setLED(UP_BTN);
+    } else {
+        trellis.clrLED(UP_BTN);
+    }
+}
+
 uint8_t ButtonManager::notePressed() {
     uint8_t note = 0;
     
     for (int i = 8; i < 16; i++) {
         if (trellis.justPressed(i)) {
-            note = notes[i - 8];
+            note = addOctave(notes[i - 8]);
+
+            if (trellis.isKeyPressed(SHIFT_BTN)) {
+                note++;
+            }
 
             trellis.setLED(i);
         }
@@ -124,15 +146,15 @@ uint8_t ButtonManager::notePressed() {
     return note;
 }
 
-uint8_t ButtonManager::noteReleased(bool isPlaying) {
+uint8_t ButtonManager::noteReleased(bool isRecording) {
     uint8_t note = 0;
     
     for (int i = 8; i < 16; i++) {
         if (trellis.justReleased(i)) {
-            note = notes[i - 8];
+            note = addOctave(notes[i - 8]);
 
             uint8_t lights = (stepsPressed == 0) ? 8 : stepsPressed;
-            if (!isPlaying && i - 8 >= lights) {
+            if (!isRecording || i - 8 >= lights) {
                 trellis.clrLED(i);
             }
         }
@@ -145,6 +167,10 @@ void ButtonManager::clearAllBeats() {
     for (int i = 8; i < 16; i++) {
         trellis.clrLED(i);
     }
+}
+
+uint8_t ButtonManager::addOctave(uint8_t note) {
+    return max(min(note + (octaveMod * 12), 127), 1);
 }
 
 void ButtonManager::setBeatLED(int beat, int sequenceLength) {

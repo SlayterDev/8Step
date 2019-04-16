@@ -12,6 +12,8 @@ public:
     void noteOn(uint8_t pitch);
     void noteOff(uint8_t pitch);
     void ccChange(uint8_t ccNum, uint8_t val);
+    void sendPlayStop(bool play);
+    void midiClockCheck(unsigned long delta, int tempo);
     void midiRead(uint8_t division);
     bool midiBeat();
 
@@ -30,6 +32,7 @@ private:
     unsigned int beatCounter;
     bool beatLock;
     uint8_t timeDiv;
+    unsigned long prevSend;
 
     void midiNoteOn(byte channel, byte pitch, byte velocity);
     void midiNoteOff(byte channel, byte pitch, byte velocity);

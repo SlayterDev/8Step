@@ -69,3 +69,21 @@ void MidiManager::noteOff(uint8_t pitch) {
 void MidiManager::ccChange(uint8_t ccNum, uint8_t val) {
     midiControlChange(channel, ccNum, val);
 }
+
+void MidiManager::sendPlayStop(bool play) {
+    byte header = (play) ? 0xFA : 0xFC;
+    midiEventPacket_t packet = {header >> 4, header, 0, 0};
+    MidiUSB.sendMIDI(packet);
+    MidiUSB.flush();
+}
+
+void MidiManager::midiClockCheck(unsigned long delta, int tempo) {
+    int inter = (1000 / (tempo * 24)) * 60; // 24 frames per quarter
+
+    if (delta - prevSend >= inter) {
+        midiEventPacket_t packet = {0x0F, 0xF8, 0, 0};
+        MidiUSB.sendMIDI(packet);
+
+        prevSend = delta;
+    }
+}

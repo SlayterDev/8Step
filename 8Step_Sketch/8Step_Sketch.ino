@@ -75,10 +75,18 @@ void handleButtons(unsigned long currentMillis) {
 
     if (buttonManager.playPressed()) {
       sequencer.togglePlayPause();
+
+      if (MODE == INTER) {
+        midiManager.sendPlayStop(true);
+      }
     }
 
     if (buttonManager.recordPressed()) {
       sequencer.startRecording();
+
+      if (MODE == INTER) {
+        midiManager.sendPlayStop(false);
+      }
     }
 
     uint8_t notePressed = buttonManager.notePressed();
@@ -142,6 +150,10 @@ void handleBeat(unsigned long currentMillis) {
     midiManager.noteOff(lastNote);
     lastNote = 0;
   }
+
+  if (MODE == INTER && sequencer.isPlaying()) {
+    midiManager.midiClockCheck(currentMillis, tempo);
+  }
 }
 
 void loop() {
@@ -153,5 +165,6 @@ void loop() {
 
   handleBeat(currentMillis);
 
-  midiManager.midiRead(timeDiv);
+  if (MODE == USB)
+    midiManager.midiRead(timeDiv);
 }

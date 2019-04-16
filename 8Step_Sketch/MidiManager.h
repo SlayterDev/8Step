@@ -6,19 +6,35 @@
 
 class MidiManager {
 public:
+    void (*playCallback)(void);
+    void (*stopCallback)(void);
+
     void noteOn(uint8_t pitch);
     void noteOff(uint8_t pitch);
     void ccChange(uint8_t ccNum, uint8_t val);
+    void midiRead(uint8_t division);
+    bool midiBeat();
 
     MidiManager() :
-    channel(1) {}
+    channel(1),
+    isMidiPlaying(false),
+    beatLock(false),
+    beatCounter(0),
+    timeDiv(1) {}
+
+    inline bool isPlaying() const { return isMidiPlaying; }
 
 private:
     int channel;
+    bool isMidiPlaying;
+    unsigned int beatCounter;
+    bool beatLock;
+    uint8_t timeDiv;
 
     void midiNoteOn(byte channel, byte pitch, byte velocity);
     void midiNoteOff(byte channel, byte pitch, byte velocity);
     void midiControlChange(byte channel, byte control, byte value);
+    void processMidiClock();
 };
 
 #endif

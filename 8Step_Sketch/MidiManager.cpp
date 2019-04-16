@@ -17,6 +17,47 @@ void MidiManager::midiControlChange(byte channel, byte control, byte value) {
     MidiUSB.sendMIDI(event);
 }
 
+void MidiManager::midiRead(uint8_t division) {
+    if (division != timeDiv) {
+        timeDiv = division;
+    }
+
+    midiEventPacket_t rx;
+    do {
+        rx = MidiUSB.read();
+        if (rx.header != 0) {
+            if (rx.byte1 == 0xFA) {
+                isMidiPlaying = true;
+                beatCounter = 0;
+                (playCallback)();
+            }
+            if (rx.byte1 == 0xFC) {
+                isMidiPlaying = false;
+                (stopCallback)();
+            }
+            if (rx.byte1 == 0xF8) {
+                processMidiClock();
+            }
+        }
+    } while (rx.header != 0);
+}
+
+void MidiManager::processMidiClock() {
+    beatCounter++;
+    beatLock = false;
+}
+
+bool MidiManager::midiBeat() {
+    bool beat = beatCounter % (24 / timeDiv) == 0;
+
+    if (beat && !beatLock) {
+        beatLock = true;
+        return true;
+    }
+
+    return false;
+}
+
 void MidiManager::noteOn(uint8_t pitch) {
     midiNoteOn(channel, pitch, 127);
 }

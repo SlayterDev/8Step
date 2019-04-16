@@ -8,10 +8,12 @@
 class ButtonManager {
 public:
     void setupManager();
-    bool stateChanged(unsigned long delta);
+    bool stateChanged(unsigned long delta, bool currentMode);
     bool playPressed();
+    void togglePlayButton();
     bool recordPressed();
     bool tapPressed();
+    bool modeChanged(bool currentMode);
 
     bool extendPressed();
     bool reducePressed();

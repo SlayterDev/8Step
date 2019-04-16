@@ -2,6 +2,11 @@
 #include "MidiManager.h"
 #include "ButtonManager.h"
 
+#define INTER 0
+#define USB 1
+
+bool MODE = INTER;
+
 Sequencer sequencer;
 MidiManager midiManager;
 ButtonManager buttonManager;
@@ -20,10 +25,27 @@ unsigned long prevMillis = 0;
 // TODO: Remove
 uint8_t lastNote = 0;
 
+void midiPlayCallback() {
+  sequencer.togglePlayPause();
+  buttonManager.togglePlayButton();
+}
+
+void midiStopCallback() {
+  sequencer.togglePlayPause();
+  buttonManager.togglePlayButton();
+
+  if (lastNote != 0) {
+    midiManager.noteOff(lastNote);
+  }
+}
+
 void setup() {
   Serial.begin(250000);
   
   buttonManager.setupManager();
+
+  midiManager.playCallback = &midiPlayCallback;
+  midiManager.stopCallback = &midiStopCallback;
 
   tempo = map(analogRead(0), 0, 1023, 30, 210);
   timeDiv = map(analogRead(1), 0, 1023, 0, 3);
@@ -48,7 +70,9 @@ void readKnobs() {
 }
 
 void handleButtons(unsigned long currentMillis) {
-  if (buttonManager.stateChanged(currentMillis)) {
+  if (buttonManager.stateChanged(currentMillis, MODE)) {
+    MODE = buttonManager.modeChanged(MODE);
+
     if (buttonManager.playPressed()) {
       sequencer.togglePlayPause();
     }
@@ -92,7 +116,14 @@ void handleBeat(unsigned long currentMillis) {
   int inter = (1000 / (tempo * timeDiv)) * 60;
   int gateInter = inter * gate;
 
-  if (currentMillis - prevMillis >= inter && sequencer.isPlaying()) {
+  bool beatOccured = false;
+  if (MODE == INTER) {
+    beatOccured = currentMillis - prevMillis >= inter && sequencer.isPlaying();
+  } else if (MODE == USB) {
+    beatOccured = midiManager.isPlaying() && midiManager.midiBeat();
+  }
+
+  if (beatOccured) {
     // EVERY BEAT
 
     uint8_t note = sequencer.processStep(&buttonManager);
@@ -121,4 +152,6 @@ void loop() {
   handleButtons(currentMillis);  
 
   handleBeat(currentMillis);
+
+  midiManager.midiRead(timeDiv);
 }

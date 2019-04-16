@@ -14,7 +14,7 @@ void ButtonManager::setupManager() {
     trellis.writeDisplay();
 }
 
-bool ButtonManager::stateChanged(unsigned long delta) {
+bool ButtonManager::stateChanged(unsigned long delta, bool currentMode) {
     if (delta - previousReadTime < 20L) {
         return false;
     }
@@ -26,9 +26,12 @@ bool ButtonManager::stateChanged(unsigned long delta) {
     if (state) {
         if (trellis.justPressed(SHIFT_BTN)) {
             trellis.setLED(SHIFT_BTN);
+            trellis.setLED(DOWN_BTN + currentMode);
         }
         if (trellis.justReleased(SHIFT_BTN)) {
             trellis.clrLED(SHIFT_BTN);
+            trellis.clrLED(DOWN_BTN);
+            trellis.clrLED(DOWN_BTN);
         }
 
         checkOctaveButtons();
@@ -42,17 +45,10 @@ void ButtonManager::commitLEDState() {
 }
 
 bool ButtonManager::playPressed() {
-    bool state = trellis.isLED(PLAY_BTN);
     bool justPressed = trellis.justPressed(PLAY_BTN);
 
     if (justPressed) {
-        if (!state) {
-            trellis.setLED(PLAY_BTN);
-            trellis.clrLED(REC_BTN);
-        } else {
-            trellis.clrLED(PLAY_BTN);
-            clearAllBeats();
-        }
+        togglePlayButton();
     }
     
     return justPressed;
@@ -75,6 +71,18 @@ bool ButtonManager::recordPressed() {
     return justPressed;
 }
 
+void ButtonManager::togglePlayButton() {
+    bool state = trellis.isLED(PLAY_BTN);
+
+    if (!state) {
+        trellis.setLED(PLAY_BTN);
+        trellis.clrLED(REC_BTN);
+    } else {
+        trellis.clrLED(PLAY_BTN);
+        clearAllBeats();
+    }
+}
+
 bool ButtonManager::tapPressed() {
     bool state = trellis.isLED(TAP_BTN);
     bool justPressed = trellis.justPressed(TAP_BTN);
@@ -86,6 +94,23 @@ bool ButtonManager::tapPressed() {
     }
 
     return justPressed;
+}
+
+bool ButtonManager::modeChanged(bool currentMode) {
+    if (!trellis.isKeyPressed(SHIFT_BTN)) return currentMode;
+
+    if (trellis.justPressed(DOWN_BTN)) {
+        trellis.setLED(DOWN_BTN);
+        trellis.clrLED(UP_BTN);
+        return 0; // Internal sync
+    }
+    if (trellis.justPressed(UP_BTN)) {
+        trellis.setLED(UP_BTN);
+        trellis.clrLED(DOWN_BTN);
+        return 1; // USB sync
+    }
+
+    trellis.setLED(DOWN_BTN + currentMode);
 }
 
 bool ButtonManager::extendPressed() {

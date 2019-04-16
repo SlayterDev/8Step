@@ -8,13 +8,13 @@ Hardware MIDI sequencer adapted from the Adafruit [Mini UNTZtrument](https://lea
 
 - [x] Sequence MIDI devices
 - [x] Change tempo with Rate Knob
-- [ ] Change time division with Knob 2
+- [x] Change time division with Knob 2
 - [ ] Transmit MIDI CC on Knob 3 & 4
 
 **(Desired)**
 
 - [ ] Sequence multiple devices simultaneously
-- [ ] Sync with USB for start/stop and tempo
+- [x] Sync with USB for start/stop and tempo
 - [ ] Send Play over MIDI for external devices
 - [ ] Store at least the last sequence
 - [ ] Tap Tempo
@@ -26,7 +26,7 @@ Hardware MIDI sequencer adapted from the Adafruit [Mini UNTZtrument](https://lea
 - [ ] Edit Step
 - [x] Gate length on Knob 3
 - [ ] Swing on Knob 4
-- [ ] Add switch for internal/USB/external sync
+- [x] Add switch for internal/USB/external sync
 
 ## Button Layout
 

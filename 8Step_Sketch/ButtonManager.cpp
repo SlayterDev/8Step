@@ -1,3 +1,4 @@
+#include <math.h>
 #include "ButtonManager.h"
 
 void ButtonManager::setupManager() {
@@ -130,7 +131,8 @@ uint8_t ButtonManager::noteReleased(bool isPlaying) {
         if (trellis.justReleased(i)) {
             note = notes[i - 8];
 
-            if (!isPlaying && i + 8 >= stepsPressed) {
+            uint8_t lights = (stepsPressed == 0) ? 8 : stepsPressed;
+            if (!isPlaying && i - 8 >= lights) {
                 trellis.clrLED(i);
             }
         }
@@ -156,16 +158,23 @@ void ButtonManager::setBeatLED(int beat, int sequenceLength) {
 }
 
 void ButtonManager::setStepRecordLEDs(int steps, int sequenceLength) {
-    if (steps == 8)
+    if (steps % 8 == 0 && sequenceLength > 8 && steps < sequenceLength) {
         clearAllBeats();
+    }
 
     stepsPressed = steps % 8;
-    for (int i = 8; i < 8 + stepsPressed; i++) {
+    uint8_t lights = (stepsPressed == 0 && steps == sequenceLength) ? 8 : stepsPressed;
+    for (int i = 8; i < 8 + lights; i++) {
         trellis.setLED(i);
     }
 
     if (sequenceLength > 8) {
         uint8_t pageLED = (steps / 8) + 8;
+
+        if (steps == sequenceLength) {
+            pageLED--;
+        }
+
         if (trellis.isLED(pageLED)) {
             trellis.clrLED(pageLED);
         } else {

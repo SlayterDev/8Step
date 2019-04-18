@@ -53,16 +53,14 @@ void setup() {
 }
 
 void readKnobs() {
+  int newTempo = tempo;
   if (MODE == INTER) {
-    int newTempo = map(analogRead(0), 0, 1023, 30, 210);
-    if (newTempo != tempo) {
-      tempo = newTempo;
-    }
+    newTempo = map(analogRead(0), 0, 1023, 30, 210);
   } else {
-    int newTempo = midiManager.midiTempo();
-    if (newTempo != tempo) {
-      tempo = newTempo;
-    }
+    newTempo = midiManager.midiTempo();
+  }
+  if (newTempo != tempo) {
+    tempo = newTempo;
   }
 
   int newDiv = divs[map(analogRead(1), 0, 1023, 0, 3)];
@@ -84,7 +82,7 @@ void handleButtons(unsigned long currentMillis) {
       sequencer.togglePlayPause();
 
       if (MODE == INTER) {
-        midiManager.sendPlayStop(true);
+        midiManager.sendPlayStop(sequencer.isPlaying());
       }
     }
 

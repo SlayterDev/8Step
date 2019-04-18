@@ -31,7 +31,7 @@ bool ButtonManager::stateChanged(unsigned long delta, bool currentMode) {
         if (trellis.justReleased(SHIFT_BTN)) {
             trellis.clrLED(SHIFT_BTN);
             trellis.clrLED(DOWN_BTN);
-            trellis.clrLED(DOWN_BTN);
+            trellis.clrLED(UP_BTN);
         }
 
         checkOctaveButtons();

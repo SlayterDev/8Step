@@ -14,15 +14,17 @@ public:
     void ccChange(uint8_t ccNum, uint8_t val);
     void sendPlayStop(bool play);
     void midiClockCheck(unsigned long delta, int tempo);
-    void midiRead(uint8_t division);
+    void midiRead(uint8_t division, unsigned long delta);
     bool midiBeat();
+    int midiTempo();
 
     MidiManager() :
     channel(1),
     isMidiPlaying(false),
     beatLock(false),
     beatCounter(0),
-    timeDiv(1) {}
+    timeDiv(1),
+    frameGap(0) {}
 
     inline bool isPlaying() const { return isMidiPlaying; }
 
@@ -33,11 +35,12 @@ private:
     bool beatLock;
     uint8_t timeDiv;
     unsigned long prevSend;
+    unsigned long frameGap;
 
     void midiNoteOn(byte channel, byte pitch, byte velocity);
     void midiNoteOff(byte channel, byte pitch, byte velocity);
     void midiControlChange(byte channel, byte control, byte value);
-    void processMidiClock();
+    void processMidiClock(unsigned long delta);
 };
 
 #endif

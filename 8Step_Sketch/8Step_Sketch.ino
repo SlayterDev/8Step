@@ -48,14 +48,21 @@ void setup() {
   midiManager.stopCallback = &midiStopCallback;
 
   tempo = map(analogRead(0), 0, 1023, 30, 210);
-  timeDiv = map(analogRead(1), 0, 1023, 0, 3);
+  timeDiv = divs[map(analogRead(1), 0, 1023, 0, 3)];
   gate = map(analogRead(2), 0, 1023, 10, 90) / 100;
 }
 
 void readKnobs() {
-  int newTempo = map(analogRead(0), 0, 1023, 30, 210);
-  if (newTempo != tempo) {
-    tempo = newTempo;
+  if (MODE == INTER) {
+    int newTempo = map(analogRead(0), 0, 1023, 30, 210);
+    if (newTempo != tempo) {
+      tempo = newTempo;
+    }
+  } else {
+    int newTempo = midiManager.midiTempo();
+    if (newTempo != tempo) {
+      tempo = newTempo;
+    }
   }
 
   int newDiv = divs[map(analogRead(1), 0, 1023, 0, 3)];
@@ -166,5 +173,5 @@ void loop() {
   handleBeat(currentMillis);
 
   if (MODE == USB)
-    midiManager.midiRead(timeDiv);
+    midiManager.midiRead(timeDiv, currentMillis);
 }

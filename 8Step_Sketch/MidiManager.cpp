@@ -17,7 +17,7 @@ void MidiManager::midiControlChange(byte channel, byte control, byte value) {
     MidiUSB.sendMIDI(event);
 }
 
-void MidiManager::midiRead(uint8_t division) {
+void MidiManager::midiRead(uint8_t division, unsigned long delta) {
     if (division != timeDiv) {
         timeDiv = division;
     }
@@ -36,15 +36,21 @@ void MidiManager::midiRead(uint8_t division) {
                 (stopCallback)();
             }
             if (rx.byte1 == 0xF8) {
-                processMidiClock();
+                processMidiClock(delta);
             }
         }
     } while (rx.header != 0);
 }
 
-void MidiManager::processMidiClock() {
+void MidiManager::processMidiClock(unsigned long delta) {
     beatCounter++;
     beatLock = false;
+
+    if (delta - prevSend != frameGap) {
+        frameGap = delta - prevSend;
+    }
+
+    prevSend = delta;
 }
 
 bool MidiManager::midiBeat() {
@@ -56,6 +62,12 @@ bool MidiManager::midiBeat() {
     }
 
     return false;
+}
+
+int MidiManager::midiTempo() {
+    if (frameGap == 0) return 120;
+
+    return 60000 / (24 * frameGap);
 }
 
 void MidiManager::noteOn(uint8_t pitch) {

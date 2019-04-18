@@ -27,7 +27,7 @@ Hardware MIDI sequencer adapted from the Adafruit [Mini UNTZtrument](https://lea
 - [x] Gate length on Knob 3
 - [ ] Swing on Knob 4
 - [x] Add switch for internal/USB/external sync
-- [ ] Figure out tempo from MIDI for gate
+- [x] Figure out tempo from MIDI for gate
 
 ## Button Layout
 

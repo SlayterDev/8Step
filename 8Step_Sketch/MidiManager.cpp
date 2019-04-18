@@ -83,6 +83,7 @@ void MidiManager::midiClockCheck(unsigned long delta, int tempo) {
     if (delta - prevSend >= inter) {
         midiEventPacket_t packet = {0x0F, 0xF8, 0, 0};
         MidiUSB.sendMIDI(packet);
+        MidiUSB.flush();
 
         prevSend = delta;
     }

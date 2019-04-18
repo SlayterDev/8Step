@@ -4,36 +4,33 @@ Hardware MIDI sequencer adapted from the Adafruit [Mini UNTZtrument](https://lea
 
 ## Features
 
-**(Required)**
-
 - [x] Sequence MIDI devices
 - [x] Change tempo with Rate Knob
 - [x] Change time division with Knob 2
-- [ ] Transmit MIDI CC on Knob 3 & 4
-
-**(Desired)**
-
-- [ ] Sequence multiple devices simultaneously
 - [x] Sync with USB for start/stop and tempo
 - [x] Send Play over MIDI for external devices
-- [ ] Store at least the last sequence
-- [ ] Tap Tempo
 - [x] Variable Sequence Length
 - [x] Change octaves
 - [x] Accidentals using Shift Button
 - [x] Performance Mode
+- [x] Gate length on Knob 3
+- [x] Add switch for internal/USB/external sync
+- [x] Sync tempo from MIDI
+
+**(Desired)**
+
+- [ ] Sequence multiple devices simultaneously
+- [ ] Store at least the last sequence
+- [ ] Tap Tempo
 - [ ] Remove Last Step
 - [ ] Edit Step
-- [x] Gate length on Knob 3
 - [ ] Swing on Knob 4
-- [x] Add switch for internal/USB/external sync
-- [x] Figure out tempo from MIDI for gate
 
 ## Button Layout
 
 ```
 +------------+
-|(t)(l)(c)(c)| <-- Knobs
+|(t)(l)(g)(S)| <-- Knobs
 +------------+
 |[p][r][T][s]| <-- Buttons
 |[d][u][b][n]|
@@ -48,21 +45,23 @@ Hardware MIDI sequencer adapted from the Adafruit [Mini UNTZtrument](https://lea
 
 `l` - Time Division
 
-`c` - MIDI CC
+`g` - Gate
+
+`S` - Swing
 
 `k` - Undefined knob
 
 `p` - Play/Pause Sequence
 
-`r` - Record (Clear Sequence)
+`r` - Record
 
-`T` - Tap tempo (Rest)
+`T` - Rest (Tap Tempo)
 
 `s` - (Shift)
 
 `d` - Octave down (Toggle sync mode)
 
-`u` - Octave up (Toggle Knob mode)
+`u` - Octave up
 
 `b` - Prev Page (Reduce Sequence)
 

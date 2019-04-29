@@ -13,7 +13,6 @@ ButtonManager buttonManager;
 
 int led = 13;
 int tempo = 120;
-int quater = (1000 / (120 * 8)) * 60; // 1/8
 
 int divs[] = {1, 2, 4, 8};
 int timeDiv = 1;
@@ -22,7 +21,6 @@ float gate = 0.90;
 
 unsigned long prevMillis = 0;
 
-// TODO: Remove
 uint8_t lastNote = 0;
 
 void midiPlayCallback() {
@@ -40,7 +38,7 @@ void midiStopCallback() {
 }
 
 void setup() {
-  Serial.begin(250000);
+  // Serial.begin(250000);
   
   buttonManager.setupManager();
 

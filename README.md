@@ -92,5 +92,3 @@ Each step lights as it plays. Play light stays on while sequence is playing.
 **Performance Mode**
 
 `[ No Sequence Playing ] -> [ Press Key ] -> [ Transmit Note ]`
-
-

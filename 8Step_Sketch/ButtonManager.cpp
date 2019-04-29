@@ -84,7 +84,6 @@ void ButtonManager::togglePlayButton() {
 }
 
 bool ButtonManager::tapPressed() {
-    bool state = trellis.isLED(TAP_BTN);
     bool justPressed = trellis.justPressed(TAP_BTN);
 
     if (justPressed) {
@@ -111,6 +110,7 @@ bool ButtonManager::modeChanged(bool currentMode) {
     }
 
     trellis.setLED(DOWN_BTN + currentMode);
+    return currentMode;
 }
 
 bool ButtonManager::extendPressed() {
